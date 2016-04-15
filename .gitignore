@@ -31,4 +31,4 @@ proguard/
 gradle/
 gradlew
 gradlew.bat
-
+*/build
