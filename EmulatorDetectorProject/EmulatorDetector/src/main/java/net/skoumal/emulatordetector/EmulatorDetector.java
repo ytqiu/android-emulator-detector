@@ -21,55 +21,69 @@ public class EmulatorDetector {
     private static final String TAG = "EmulatorDetector";
 
     private static int rating = -1;
-
     /**
      * Detects if app is currenly running on emulator, or real device.
      * @return true for emulator, false for real devices
      */
     public static boolean isEmulator() {
 
-        if(rating < 0) { // rating is not calculated yet
+        if (rating < 0) { // rating is not calculated yet
             int newRating = 0;
 
-            if(Build.PRODUCT.equals("sdk") ||
+            if (Build.PRODUCT.equals("sdk") ||
                     Build.PRODUCT.equals("google_sdk") ||
+                    Build.PRODUCT.contains("Droid4X") ||
                     Build.PRODUCT.equals("sdk_x86") ||
-                    Build.PRODUCT.equals("vbox86p")) {
-                newRating ++;
+                    Build.PRODUCT.contains("sdk_google") ||
+                    Build.PRODUCT.equals("vbox86p") ||
+                    Build.PRODUCT.equals("arc")) {
+                newRating++;
             }
 
-            if(Build.MANUFACTURER.equals("unknown") ||
-                    Build.MANUFACTURER.equals("Genymotion")) {
-                newRating ++;
+            if (Build.MANUFACTURER.equals("unknown") ||
+                    Build.MANUFACTURER.equals("Genymotion") ||
+                    Build.MANUFACTURER.equals("chromium")) {
+                newRating++;
             }
 
-            if(Build.BRAND.equals("generic") ||
-                    Build.BRAND.equals("generic_x86")) {
-                newRating ++;
+            if (Build.BRAND.equals("generic") ||
+                    Build.BRAND.equals("generic_x86") ||
+                    Build.BRAND.equals("chromium")) {
+                newRating++;
             }
 
-            if(Build.DEVICE.equals("generic") ||
-                    Build.DEVICE.equals("generic_x86") ||
-                    Build.DEVICE.equals("vbox86p")) {
-                newRating ++;
+            if (Build.DEVICE.equals("generic") ||
+                    Build.DEVICE.contains("generic_x86") ||
+                    Build.DEVICE.equals("vbox86p") ||
+                    Build.DEVICE.contains("Droid4X") ||
+                    Build.DEVICE.contains("nacl_x86")) {
+                newRating++;
             }
 
-            if(Build.MODEL.equals("sdk") ||
+            if (Build.MODEL.equals("sdk") ||
                     Build.MODEL.equals("google_sdk") ||
-                    Build.MODEL.equals("Android SDK built for x86")) {
-                newRating ++;
+                    Build.MODEL.contains("Droid4X") ||
+                    Build.MODEL.contains("Android SDK built for x86") ||
+                    Build.MODEL.contains("Emulator") ||
+                    Build.MODEL.contains("Chrome Dev")) {
+                newRating++;
             }
 
-            if(Build.HARDWARE.equals("goldfish") ||
-                    Build.HARDWARE.equals("vbox86")) {
-                newRating ++;
+            if (Build.HARDWARE.equals("goldfish") ||
+                    Build.HARDWARE.equals("vbox86") ||
+                    Build.HARDWARE.equals("arc")) {
+                newRating++;
             }
 
-            if(Build.FINGERPRINT.contains("generic/sdk/generic") ||
+            if (Build.FINGERPRINT.contains("generic/sdk/generic") ||
+                    Build.FINGERPRINT.startsWith("generic") ||
                     Build.FINGERPRINT.contains("generic_x86/sdk_x86/generic_x86") ||
                     Build.FINGERPRINT.contains("generic/google_sdk/generic") ||
-                    Build.FINGERPRINT.contains("generic/vbox86p/vbox86p")) {
-                newRating ++;
+                    Build.FINGERPRINT.contains("generic_x86_64") ||
+                    Build.FINGERPRINT.contains("vbox86p") ||
+                    Build.FINGERPRINT.contains("chromium/arc/nacl_x86")
+                    ) {
+                newRating++;
             }
 
             rating = newRating;
